@@ -1,8 +1,5 @@
-**README.md - Titan Patient Management System (Python Django)**
-
-## Titan Patient Management System
-
-Titan is a powerful Patient Management System developed using the Django framework in Python. This system efficiently stores, manages, and analyzes patient data, providing a seamless user experience. It includes features for patient data storage, display, statistical analysis, Google Sync automation for data synchronization with Google Sheets, and a comprehensive activity log that tracks recent activities, including field edits.
+## Titan 
+Titan is a powerful Patient Management System developed using the Django framework in Python. This system efficiently stores, manages, and analyzes patient data, providing a seamless user experience. It includes features for patient data storage, display, statistical analysis, Google Sync automation for data synchronization with Google Sheets, a comprehensive activity log that tracks recent activities, including field edits, and migration support for database updates.
 
 ### Features:
 
@@ -26,6 +23,10 @@ Titan is a powerful Patient Management System developed using the Django framewo
    - Maintain a detailed activity log that records recent interactions and updates for each patient.
    - Track changes, including who edited which patient field, ensuring transparency and accountability.
 
+6. **Migration Support:**
+   - Implement database migrations to manage schema updates and ensure data consistency.
+   - Use Django's migration commands to apply changes to the database schema.
+
 ### Getting Started:
 
 Follow these steps to set up and deploy Titan Patient Management System:
@@ -41,11 +42,18 @@ Follow these steps to set up and deploy Titan Patient Management System:
    pip install -r requirements.txt
    ```
 
-3. **Configure Google Sync:**
+3. **Database Migrations:**
+   - Apply initial migrations to set up the database schema.
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+4. **Configure Google Sync:**
    - Obtain Google Sheets API credentials and configure them in the Django project.
    - Set up the necessary permissions for Google Sync automation.
 
-4. **Run the Development Server:**
+5. **Run the Development Server:**
    ```bash
    python manage.py runserver
    ```
