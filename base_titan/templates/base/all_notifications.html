@@ -1,0 +1,63 @@
+<!-- all_notifications.html -->
+{% extends 'main.html' %}
+{% block content %}
+    <div class="notification-container">
+        <h1>All Notifications</h1>
+        <ul class="notification-list">
+            {% for notification in notifications %}
+                <li class="notification-item">
+                    <div class="notification-details">
+                        <strong>@{{ notification.actor }}</strong> {{ notification.verb }}
+                    </div>
+                    <div class="notification-timestamp">
+                        ({{ notification.timestamp|timesince }} ago)
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <style>
+        /* all_notifications.css */
+        .notification-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333; /* You can adjust the color to your preference */
+            text-align: center;
+        }
+
+        ul.notification-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li.notification-item {
+            background-color: #A3E4D7; /* Light gray background */
+            border: 1px solid #ccc; /* Add a subtle border */
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight box shadow */
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .notification-details {
+            font-size: 16px;
+        }
+
+        .notification-timestamp {
+            font-size: 12px;
+            color: #424949;
+        }
+
+        /* Add a subtle hover effect to highlight the list items */
+        li.notification-item:hover {
+            background-color: #e0e0e0; /* Change to your desired hover color */
+        }
+    </style>
+{% endblock %}

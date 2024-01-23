@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <div id="container" class="chart-container">
+        <h2>Patient Status</h2>
+        <canvas id="pie-chart" class="chart"></canvas>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  var data = {{ data|safe }};
+  var labels = {{ labels|safe }};
+
+  var config = {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: data,
+        backgroundColor: [
+          '#FF5733', '#FFC300', '#36A2EB', '#FF6384', '#4BC0C0', '#82E0AA', '#4A235A' , '#78281F' , '#2E86C1' , '#28B463'
+        ], // Add more colors as needed
+        label: 'Patient Status'
+      }],
+      labels: labels
+    },
+    options: {
+      responsive: true
+    }
+  };
+
+  window.onload = function() {
+    var ctx = document.getElementById('pie-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+  };
+</script>
+
+       <div id="pie-chart-info" class="info-container">
+        <p><strong>Total Patients: {{patients.count}}</strong></p>
+        <ul>
+            {% for data_item, label in data_labels %}
+                <li><strong>{{ label }}: {{ data_item }}</strong></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .chart-container {
+        width: 35%;
+        margin: 20px 0;
+    }
+
+    .chart {
+        width: 60%;
+    }
+
+    .info-container {
+        width: 30%;
+        background-color: #76D7C4 ;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+</style>
+
+{% endblock %}
+
+

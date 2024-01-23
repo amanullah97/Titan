@@ -1,0 +1,159 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    .btn-primary:hover {
+    background-color: #FFA500;
+}
+</style>
+    <div class="container table-container">
+        {% if messages %}
+        {% for message in messages %}
+           <div class="alert alert-success">
+                <strong>{{message}}</strong>
+           </div>
+        {% endfor %}
+        {% endif %}
+
+        <h2 class="text-center">Patient-Pool</h2>
+        <h3>Total Patients: {{patients.paginator.count}}</h3>
+        <div class="table-responsive">
+            <form class="form-inline mb-3" id="search-form">
+                <select class="form-control mr-sm-2" name="search_option">
+                    <option value="patient">Search Patients</option>
+                    <option value="insurance">Search Insurance</option>
+        <!-- Add more options as needed -->
+                </select>
+                <input class="form-control mr-sm-2" type="search" name="search_query" placeholder="Search..." aria-label="Search" id="search_query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            {% load custom_tags %}
+
+        <div class="col-md-6">
+               {% if search_option|in_list:'patient,insurance' %}
+               <!-- Do Nothing -->
+                {% else %}
+            <form class="form-inline mb-3 float-md-right">
+                <label class="mr-2">Results per page:</label>
+                <select class="form-control mr-sm-2" name="per_page" onchange="this.form.submit()" id="per_page">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                </select>
+                <input type="hidden" name="search_option" value="{{ search_option }}">
+                <input type="hidden" name="search_query" value="{{ search_query }}">
+            </form>
+            {% endif %}
+        </div>
+
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>DOB</th>
+                        <th>Insurance</th>
+                        <th>Insurance Type</th>
+                        <th>Gender</th>
+                        <th>Last Appointment</th>
+                        <th>Provider</th>
+                        <th>Age</th>
+                        <th>Referred By</th>
+<!--                        <th>Status</th>-->
+                        <th>Last Edited By</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% if patients %}
+                {% for patient in patients %}
+                    <tr>
+                        <td>{{patient.name}}</td>
+                        <td>{{patient.date_of_birth}}</td>
+                        <td>{{patient.insurance}}</td>
+                        <td>{{patient.insurance_type}}</td>
+                        <td>{{patient.gender}}</td>
+                        <td>{{patient.last_appointment}}</td>
+                        <td>{{patient.provider}}</td>
+                        <td>{{patient.age}}</td>
+                        <td>{{patient.referred_by}}</td>
+<!--                        <td>{{patient.status}}</td>-->
+                        <td><strong>@{{patient.operator}}</strong></td>
+
+                        <td><a class="btn btn-primary" href="{% url 'update-patient' patient.id %}">Edit</a>
+                            <a class="btn btn-primary" href="{% url 'delete-patient' patient.id %}">Delete </a>
+
+                        </td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="11" class="text-center">No results found.</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    {% load custom_tags %}
+    <div class="pagination justify-content-center">
+        <nav aria-label="Page navigation example">
+            {% if search_option|in_list:'patient,insurance' %}
+            <!-- Do Nothing -->
+            {% else %}
+            <ul class="pagination">
+                {% if patients.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1&search_option={{ search_option }}&search_query={{ search_query }}&per_page={{ patients.paginator.per_page }}">First</a></li>
+                <li class="page-item"><a class="page-link" href= "?page={{ patients.previous_page_number }}&search_option={{ search_option }}&search_query={{ search_query }}&per_page={{ patients.paginator.per_page }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item"> <a class="page-link">Page: {{patients.number}} </a> </li>
+                {% if patients.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ patients.next_page_number }}&search_option={{ search_option }}&search_query={{ search_query }}&per_page={{ patients.paginator.per_page }}">Next</a> </li>
+                <li class="page-item"> <a class="page-link" href="?page={{ patients.paginator.num_pages }}&search_option={{ search_option }}&search_query={{ search_query }}&per_page={{ patients.paginator.per_page }}">Last</a> </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+      {% endif %}
+      {% if search_option and search_option != "None" %}
+        <div class="footer">
+            <a href="{% url 'patient-pool' %}" class="btn btn-primary">Go Back</a>
+        </div>
+        {% endif %}
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const perPageSelect = document.getElementById('per_page');
+        const selectedValue = '{{ request.GET.per_page }}'; // Change to request.GET.per_page
+        for (let i = 0; i < perPageSelect.options.length; i++) {
+            if (perPageSelect.options[i].value === selectedValue) {
+                perPageSelect.options[i].selected = true;
+                break;
+            }
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search_query');
+
+        searchForm.addEventListener('submit', function(event) {
+            if (searchInput.value.trim() === '') {
+                event.preventDefault(); // Prevent the form submission
+            }
+        });
+    });
+</script>
+
+
+    <!-- Add Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
+

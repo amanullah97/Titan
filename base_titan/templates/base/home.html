@@ -1,0 +1,244 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+     .activity-assistant {
+            color: white;
+        }
+    .user{
+    color:white;
+    }
+</style>
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="sidebar">
+                <p>Welcome: <span class="user">  @{{request.user}}</span></p>
+                <h3>Recent Activity</h3>
+
+                {% for patient in patients %}
+                    <div class="activity-item">
+                        <p><span class="activity-assistant">@{{ patient.operator }}</span> Updated Patient: <span class="activity-patient"> <strong>{{ patient.name }}</strong></span></p>
+                        <p class="activity-time">{{ patient.updated|timesince }} ago</p>
+                    </div>
+
+
+                {% endfor %}
+            </div>
+        </div>
+
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Patient-Pool</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Patients</h6>
+    <p class="card-text">Patient-Pool refers to a database or collection of patient records and information that is typically stored digitally or in a central repository.</p>
+    <a href="{% url 'patient-pool' %}" class="card-link">View Patient-Pool</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Status</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Patient-Status</h6>
+    <p class="card-text">The patient status stats where you can check whether the Patient is Active or Inactive etc. It will display a pie chart that will be helpful.</p>
+    <a href="{% url 'stats' %}" class="card-link">View Patient-Status</a>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">SCP-Stats</h5>
+    <h6 class="card-subtitle mb-2 text-muted">SCP</h6>
+    <p class="card-text">The stats that will help SCP to do better analysis on Patients Data. It will display a pie chart that will be helpful for SCP Department.</p>
+    <a href="{% url 'scp-stats' %}" class="card-link">View SCP-Stats</a>
+  </div>
+</div>
+    </div>
+
+
+
+<div id="container" style="width: 30%;">
+  <canvas id="bar-chart"></canvas>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  var patientsData = JSON.parse('{{ patients_data|safe }}');
+
+  // Group patients by creation date and count the occurrences
+  var data = [];
+  var labels = [];
+  var patientsByDate = {};
+
+  patientsData.forEach(function(patient) {
+    var date = patient.fields.created.split('T')[0]; // Extract the date part from the timestamp
+
+    if (!patientsByDate[date]) {
+      patientsByDate[date] = 0;
+      labels.push(date); // Add the date to labels
+    }
+
+    patientsByDate[date]++; // Increment the count for this date
+  });
+
+  // Prepare data array for the chart
+  labels.forEach(function(date) {
+    data.push(patientsByDate[date]);
+  });
+
+  var config = {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Patients Created by Date',
+        data: data,
+        backgroundColor: '#36A2EB', // Change the color as needed
+        borderColor: '#36A2EB',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        xAxes: [{
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 20 // Limit the number of visible ticks on the x-axis
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1, // Set the step size to 1 to display only integer values
+            precision: 0 // Remove decimal values
+          }
+        }]
+      }
+    }
+  };
+
+  window.onload = function() {
+    var ctx = document.getElementById('bar-chart').getContext('2d');
+    window.myBar = new Chart(ctx, config);
+  };
+</script>
+
+
+
+
+<style>
+  /* Add CSS styles here */
+  #container {
+    width: 30%;
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center; /* Center the contents inside the container */
+  }
+
+  #bar-chart {
+    display: block;
+    margin: 0 auto; /* Center the chart inside the container */
+  }
+</style>
+
+
+
+
+
+<footer>
+<!--  <h1 class="intro-title mb-4">Titan</h1>-->
+  <div class="intro-subtitle-wrapper">
+    <p class="intro-subtitle">
+      <span class="text-slider-items" style="display: none;">
+        Welcome to Titan, Add Patients, View Patients, View Stats, Edit Patients, Check Activity, Delete Patients
+      </span>
+      <strong class="text-slider"></strong>
+    </p>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  if ($('.text-slider').length == 1) {
+    var typed_strings = $('.text-slider-items').text();
+    var typed = new Typed('.text-slider', {
+      strings: typed_strings.split(','),
+      typeSpeed: 80,
+      loop: true,
+      backDelay: 1100,
+      backSpeed: 30
+    });
+  }
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+<!--        <div class="col-md-6">-->
+
+<!--            <div class="content">-->
+<!--                <h2>About Titan</h2>-->
+<!--                <p>Our Patient Pool ensures that patients receive the best care and attention, while our SCP team ensures-->
+<!--                    smooth coordination and communication between healthcare professionals.</p>-->
+<!--                <p>The Communication Department handles all internal and external communications, and our MA Department-->
+<!--                    is dedicated to assisting medical professionals in their day-to-day tasks.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--     <div class="stats">-->
+<!--        <h2>Statistics</h2>-->
+<!--        <canvas id="patientChart" width="400" height="400"></canvas>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Include Chart.js script &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--<script>-->
+<!--        document.addEventListener("DOMContentLoaded", function () {-->
+<!--    // Get the canvas element-->
+<!--    var ctx = document.getElementById("patientChart").getContext("2d");-->
+
+<!--    // Your data-->
+<!--    var data = {-->
+<!--        labels: ["Total Patients", "Expected New Patients", "Expected Next Appointments"],-->
+<!--        datasets: [-->
+<!--            {-->
+<!--                data: [-->
+<!--                    {{ total_patients }},-->
+<!--                    {{ expected_new_patients }},-->
+<!--                    {{ expected_next_appointments }},-->
+<!--                ],-->
+<!--                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],-->
+<!--            },-->
+<!--        ],-->
+<!--    };-->
+
+<!--    // Create a pie chart-->
+<!--    var myPieChart = new Chart(ctx, {-->
+<!--        type: "pie",-->
+<!--        data: data,-->
+<!--    });-->
+<!--});-->
+
+<!--</script>-->
+
+
+
+
+
+

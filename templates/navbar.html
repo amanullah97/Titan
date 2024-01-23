@@ -1,0 +1,291 @@
+<div class="nav">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'add-patient' %}">Add Patient</a>
+
+
+    <ul class="notification-drop">
+        <li class="item">
+            <div class="notification-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.160.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                </svg>
+                <span class="btn__badge">{{ user.notifications.unread.count }}</span>
+            </div>
+            <ul>
+                {% if user.notifications.unread.count == 0 %}
+                    <li>No new notifications</li>
+                    <li> <a href="{% url 'view-all-notification' %}" class="btn btn-link"> View Previous Notifications </a></li>
+                {% else %}
+                    {% for notification in user.notifications.unread %}
+                        <li>
+                            <a href="#" class="mark-as-read" data-notification-id="{{ notification.id }}"> @ <strong>{{ notification.actor }}</strong> {{ notification.verb }} ({{ notification.timestamp|timesince }}) ago</a>
+                        </li>
+                    {% endfor %}
+                <li><button id="mark-all-as-read" class="mark-as-read" data-mark-all-url="{% url 'mark_all_notifications_as_read' %}">Mark All as Read</button></li>
+                {% endif %}
+
+            </ul>
+        </li>
+    </ul>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Function to set the notification count in local storage
+    function setNotificationCount(count) {
+        localStorage.setItem('notificationCount', count);
+    }
+
+    // Function to get the notification count from local storage
+    function getNotificationCount() {
+        return parseInt(localStorage.getItem('notificationCount')) || 0;
+    }
+
+    // Initialize the count from local storage
+    const notificationCount = $('.btn__badge');
+
+    // Handle the click event for the notifications
+    $(".notification-drop .item").on('click', function() {
+        $(this).find('ul').toggle();
+        setNotificationCount(0);
+        notificationCount.text(0);
+    });
+
+    // Handle the click event for marking notifications as read
+    $(".mark-as-read").on('click', function(e) {
+        e.preventDefault();
+        const currentCount = getNotificationCount();
+        const updatedCount = currentCount - 1;
+        setNotificationCount(updatedCount);
+        notificationCount.text(updatedCount);
+
+        // Extract the notification ID from the button's data attribute
+        const notificationId = $(this).data('notification-id');
+
+        // Update the URL based on the notification ID
+        const markAsReadUrl = '{% url "mark_notification_as_read" 0 %}'.replace(0, notificationId);
+
+        // Redirect to the URL to mark the notification as read
+        window.location.href = markAsReadUrl;
+    });
+
+    // Handle the click event for "Mark All as Read" button
+    $("#mark-all-as-read").on('click', function() {
+        setNotificationCount(0);
+        notificationCount.text(0);
+
+        // Redirect to the URL to mark all notifications as read
+        const markAllAsReadUrl = $(this).data('mark-all-url');
+        window.location.href = markAllAsReadUrl;
+    });
+});
+</script>
+
+
+
+
+
+<!--<script>-->
+<!--$(document).ready(function() {-->
+<!--    // Function to set the notification count in local storage-->
+<!--    function setNotificationCount(count) {-->
+<!--        localStorage.setItem('notificationCount', count);-->
+<!--    }-->
+
+<!--    // Function to get the notification count from local storage-->
+<!--    function getNotificationCount() {-->
+<!--        return parseInt(localStorage.getItem('notificationCount')) || 0;-->
+<!--    }-->
+
+<!--    // Initialize the count from local storage-->
+<!--    const notificationCount = $('.btn__badge');-->
+
+<!--    // Example: Simulating new notifications-->
+<!--    $('#simulate-new-notification').on('click', function() {-->
+<!--        const currentCount = getNotificationCount();-->
+<!--        const newNotificationCount = currentCount + 1;-->
+<!--        setNotificationCount(newNotificationCount);-->
+<!--    });-->
+
+<!--    // Handle the click event for the notifications-->
+<!--    $(".notification-drop .item").on('click', function() {-->
+<!--        $(this).find('ul').toggle();-->
+
+<!--        // When clicking the notification icon, mark notifications as read-->
+<!--        // Set the notification count to zero-->
+<!--        setNotificationCount(0);-->
+<!--        notificationCount.text(0);-->
+<!--    });-->
+
+<!--    // Handle the click event for marking notifications as read-->
+<!--    $(".notification-drop .item ul li").on('click', function() {-->
+<!--        // Your logic to mark individual notifications as read goes here-->
+<!--        // For example, you can make an AJAX request to the server to mark the notification as read.-->
+<!--        // After marking as read, you can remove the notification from the list.-->
+<!--        // Update the notification count accordingly.-->
+
+<!--        // Here's an example of how to remove the clicked notification item:-->
+<!--        $(this).remove();-->
+
+<!--        // Update the notification count by decrementing it-->
+<!--        const currentCount = getNotificationCount();-->
+<!--        const updatedCount = currentCount - 1;-->
+<!--        setNotificationCount(updatedCount);-->
+
+<!--        // You may also want to update the notification count displayed in the UI.-->
+<!--        notificationCount.text(updatedCount);-->
+<!--    });-->
+<!--});-->
+<!--</script>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.notification-icon {
+    color:white;
+    position: relative;
+    display: inline-block;
+    width: 30px; /* Adjust the width as needed */
+    text-align: center; /* Center the content horizontally */
+}
+a.btn-link{
+    color:black;
+}
+
+.notification-icon .btn__badge {
+    position: absolute;
+    top: -8px; /* Adjust the top position to align the badge properly */
+    right: -8px; /* Adjust the right position to align the badge properly */
+    background-color: #FF5D5D;
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 50%;
+}
+
+a.mark-as-read {
+    color:black;
+}
+.notification-drop {
+  font-family: 'Ubuntu', sans-serif;
+  color: #444;
+}
+.notification-drop .item {
+    display: flex;
+    align-items: center; /* Center vertically within the item */
+    padding: 10px;
+    font-size: 18px;
+    position: relative;
+    border-bottom: 1px solid #ddd;
+}
+.notification-drop .item svg {
+  color:white;
+}
+
+.notification-drop .item:hover {
+  cursor: pointer;
+}
+.notification-drop .item i {
+  margin-left: 10px;
+  color: #fff; /* Add this line to set the icon color to white */
+}
+
+.notification-drop .item ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background: #fff;
+  left: -200px;
+  right: 0;
+  z-index: 1;
+  border-top: 1px solid #ddd;
+}
+.notification-drop .item ul li {
+  font-size: 16px;
+  padding: 15px 0 15px 25px;
+  color: black;
+}
+.notification-drop .item ul li:hover {
+  background: #ddd;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (min-width: 500px) {
+  .notification-drop {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .notification-drop .item {
+    border: none;
+  }
+}
+
+.notification-bell {
+  font-size: 20px;
+  background: white;
+}
+
+
+
+.pulse-button {
+  box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
+  -webkit-animation: pulse 1.5s infinite;
+}
+
+.pulse-button:hover {
+  -webkit-animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  70% {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 0 0 0 50px rgba(255, 0, 0, 0);
+  }
+  100% {
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+  }
+}
+
+.notification-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.notification-text span {
+  float: right;
+}
+</style>
+

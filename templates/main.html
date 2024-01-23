@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+     <link rel="icon" type="image/png" sizes="128x128" href="https://img.icons8.com/external-others-inmotus-design/67/external-T-alphabet-others-inmotus-design-13.png"/>
+
+
+
+    <title>Titan</title>
+
+</head>
+<body>
+
+
+    {% include 'navbar.html' %}
+
+
+    {% block content %}
+    {% endblock %}
+
+<!-- Logout user when browser gets closed -->
+<!-- Include jQuery library if not already included -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Send an AJAX request to log the user out when the browser is closed
+    $(window).on('beforeunload', function() {
+        $.ajax({
+            url: '{% url "logout" %}',  // Change this to the URL of your logout view
+            method: 'POST',
+            async: false,     // Make the request synchronous
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'  // Replace with the CSRF token
+            }
+        });
+    });
+});
+</script>
+
+<!-- Logout user when there is no activity for 30 min -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var inactivityTimeout = 1800000; // 30 minutes in milliseconds
+    var logoutUrl = "{% url 'logout' %}"; // Replace with your logout URL
+
+    var timeoutId;
+
+    function startInactivityTimer() {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function() {
+            // Redirect to logout URL
+            window.location.href = logoutUrl;
+        }, inactivityTimeout);
+    }
+
+    // Reset the inactivity timer on user activity
+    $(document).on('mousemove keydown', function() {
+        startInactivityTimer();
+    });
+
+    // Start the timer initially
+    startInactivityTimer();
+
+</script>
+</body>
+</html>

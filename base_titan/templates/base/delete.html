@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    .custom-dialog {
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.dialog-header {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.dialog-content {
+    padding: 10px;
+}
+
+.dialog-footer {
+    border-top: 1px solid #ccc;
+    text-align: right;
+    padding: 10px;
+}
+
+/* Style the buttons */
+.btn-secondary {
+    background-color: #21618C;
+    color: #fff;
+
+}
+
+
+.btn-danger {
+    background-color: #ff0000;
+    color: #fff;
+
+}
+
+.btn-secondary:hover {
+    background-color: #FFA500;
+
+}
+
+.btn-danger:hover {
+    background-color: #FFA500;
+
+}
+
+
+
+</style>
+
+    <div class="custom-dialog">
+         <form method="POST" action="">
+                {% csrf_token %}
+
+        <div class="dialog-header">
+            <h3>Confirmation</h3>
+        </div>
+        <div class="dialog-content">
+            <p>Are you sure you want to delete Patient: <strong>{{ obj }}? </strong></p>
+        </div>
+        <div class="dialog-footer">
+             <input type="submit" value="Confirm" class="btn btn-danger">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">Cancel</a>
+
+        </div>
+         </form>
+    </div>
+{% endblock %}

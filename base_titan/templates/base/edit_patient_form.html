@@ -1,0 +1,318 @@
+
+<form method="post">
+     {% csrf_token %}
+
+    <div class="form__group">
+        {{form.as_p}}
+    </div>
+       <a href="{% url 'home' %}">Cancel</a>
+    <button type="submit">Save Changes</button>
+</form>
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>New Patient Form</title>-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--    <div class="container mt-5">-->
+<!--        <h1 style="text-align:center;padding-bottom:30px"> New Patient Form</h1>-->
+<!--        <form class="form" method="POST" novalidate>-->
+<!--            {% csrf_token %}-->
+<!--            <h2 style="padding-bottom:10px">Front Desk</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                 <div class="col-md-2 mb-3">-->
+<!--                     <label for="assitant">Assistant:</label>-->
+<!--                        <select name="assistant" class="form-control" >-->
+<!--                            {% for choice in form.assistant.field.queryset %}-->
+<!--                            <option value="{{ choice.pk }}">{{ choice.first_name }}</option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--               </div>-->
+
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="status"> Status:</label>-->
+<!--                    <input type="text" name="status" class="form-control"  placeholder="Status" value="{{patient.status}}">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="referred_by">Referred By:</label>-->
+<!--                    <input type="text"  name="referred_by" class="form-control" placeholder="Referred By" value="{{patient.referred_by}}" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="registration_date">Registration Date:</label>-->
+<!--                    <input type="date" name="registration_date" class="form-control"  placeholder="Registration Date" value="{{patient.registration_date}}"  >-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <h2 style="padding-bottom:10px">Patient Personal Information</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px">-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="name">Name:</label>-->
+<!--                    <input type="text" name="name" class="form-control" id="validationDefault01" placeholder="Name" value="{{patient.name}}"  required>-->
+<!--                    {% for field in form %}-->
+<!--                    {% if field.errors %}-->
+<!--                    <div class="alert alert-danger" role="alert">-->
+<!--                        <ul class="errorlist">-->
+<!--                            {% for error in field.errors %}-->
+<!--                                <li>{{ error }}</li>-->
+<!--                            {% endfor %}-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    {% endif %}-->
+<!--                    {% endfor %}-->
+
+<!--                </div>-->
+<!--                <div class="col-md-2 mb-3">-->
+<!--                    <label for="date_of_birth">Date of Birth:</label>-->
+<!--                    <input type="date" name = "date_of_birth" class="form-control" id="validationDefault02" placeholder="Date of Birth" value="{{patient.date_of_birth}}">-->
+<!--                </div>-->
+
+<!--            <div class="col-md-3 mb-3">-->
+<!--                <label for="provider">Provider</label>-->
+<!--&lt;!&ndash;                {{form.provider}}&ndash;&gt;-->
+<!--                <select name="provider" class="form-control" required>-->
+<!--                    {% for value, label in form.provider.field.choices %}-->
+<!--                        <option value="{{value}}"  {{patient.provider}} selected >{{ label }}</option>-->
+<!--                    {% endfor %}-->
+<!--                </select>-->
+<!--            </div>-->
+
+
+<!--            <div class="col-md-2 mb-3">-->
+<!--                <label for="gender">Gender:</label>-->
+<!--                <select name="gender" class="form-control">-->
+<!--                    <option value="M" {% if patient.gender == 'M' %} selected {% endif %}>Male</option>-->
+<!--                    <option value="F" {% if patient.gender == 'F' %} selected {% endif %}>Female</option>-->
+<!--                    <option value="O" {% if patient.gender == 'O' %} selected {% endif %}>Other</option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--                <div class="col-md-2 mb-3">-->
+<!--                    <label for="insurance">Insurance:</label>-->
+<!--                    <select name="insurance" class="form-control" required>-->
+<!--                        {% for value, label in form.insurance.field.choices %}-->
+<!--                            <option value="{{ value }}">{{ label }}</option>-->
+<!--                        {% endfor %}-->
+<!--                    </select>-->
+<!--                </div>-->
+
+<!--               <div class="col-md-2 mb-3">-->
+<!--                     <label for="insurance_type">Insurance Type:</label>-->
+<!--                        <select name="insurance_type" class="form-control" required>-->
+<!--                            {% for value, label in form.insurance_type.field.choices %}-->
+<!--                            <option value="{{ value }}">{{ label }}</option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--               </div>-->
+
+<!--                <div class="col-md-2 mb-3">-->
+<!--                    <label for="patient_id">Patient ID:</label>-->
+<!--                    <input type="number" name = "patient_id" class="form-control" placeholder="Patient-ID">-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--             <h2 style="padding-bottom:10px">Appointment Status</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="patient_appointment">Appointment Date:</label>-->
+<!--                    <input type="date" name = "patient_appointment" class="form-control" id="validationDefault03" placeholder="Appointment">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="last_appointment">Last Appointment:</label>-->
+<!--                    <input type="date"  name="last_appointment" class="form-control" id="validationDefault04" placeholder="Last Appointment" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="follow_up">Follow Up:</label>-->
+<!--                    <input type="date" name="follow_up" class="form-control" id="validationDefault05" placeholder="Follow Up" >-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <h2 style="padding-bottom:10px">Vital Signs</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="last_anthropometric_date"> Last Anthropometric Date:</label>-->
+<!--                    <input type="date" name="last_anthropometric_date" class="form-control"  placeholder="Last-Anthropometric-Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="last_bmi">Last BMI:</label>-->
+<!--                    <input type="text"  name="last_bmi" class="form-control" placeholder="Last-BMI" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="last_bp_reading">Last BP Reading:</label>-->
+<!--                    <input type="text" name="last_bp_reading" class="form-control"  placeholder="e.g 120/80" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="reading_date">Reading Date:</label>-->
+<!--                    <input type="date" name="reading_date" class="form-control"  placeholder="Reading Date">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <h2 style="padding-bottom:10px">Labs and Radiology</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="bw_done "> BW Done:</label>-->
+<!--                    <input type="date" name="bw_done" class="form-control"  placeholder="BW Done">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="hb1ac_date">HbA1c Date:</label>-->
+<!--                    <input type="date"  name="hb1ac_date" class="form-control" placeholder="HbA1c Date" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="hb1ac">HbA1c Values:</label>-->
+<!--                    <select name="hb1ac" class="form-control">-->
+<!--                            <option value="4-6">4-6</option>-->
+<!--                            <option value="6-8">6-8</option>-->
+<!--                            <option value="8-10">8-10</option>-->
+<!--                            <option value="10-12">10-12</option>-->
+<!--                            <option value="12-14">12-14</option>-->
+<!--                            <option value=">14">>14</option>-->
+<!--                        </select>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="fobt_date">FOBT Date:</label>-->
+<!--                    <input type="date" name="fobt_date" class="form-control"  placeholder="FOBT Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="colonoscopy_date">Colonoscopy Date:</label>-->
+<!--                    <input type="date" name="colonoscopy_date" class="form-control"  placeholder="Colonoscopy Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="cologuard_date">Cologuard Date:</label>-->
+<!--                    <input type="date" name="cologuard_date" class="form-control"  placeholder="Cologuard Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="pap_smear_date">Pap Smear Date:</label>-->
+<!--                    <input type="date" name="pap_smear_date" class="form-control"  placeholder="Pap Smear Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="mammogram_date">Mammogram Date:(Female Patients)</label>-->
+<!--                    <input type="date" name="mammogram_date" class="form-control"  placeholder="Mammogram Date (Add only for female patients)">-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <h2 style="padding-bottom:10px">Controlled Medication</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                     <label for="suboxone">Suboxone:</label>-->
+<!--                        <select name="suboxone" class="form-control">-->
+<!--                            <option value="Y">Yes</option>-->
+<!--                            <option value="N">No</option>-->
+<!--                        </select>-->
+<!--                </div>-->
+<!--                 <div class="col-md-3 mb-3">-->
+<!--                     <label for="medical_marijuana">Medical Marijuana:</label>-->
+<!--                        <select name="medical_marijuana" class="form-control">-->
+<!--                            <option value="Y">Yes</option>-->
+<!--                            <option value="N">No</option>-->
+<!--                        </select>-->
+<!--                </div>-->
+<!--                  <div class="col-md-3 mb-3">-->
+<!--                     <label for="other_controlled_med">Other Controlled Medication</label>-->
+<!--                        <select name="other_controlled_med" class="form-control">-->
+<!--                            <option value="Y">Yes</option>-->
+<!--                            <option value="N">No</option>-->
+<!--                        </select>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="last_uds_date">Last UDS Date:</label>-->
+<!--                    <input type="date" name="last_uds_date" class="form-control"  placeholder="Last UDS Date">-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <h2 style="padding-bottom:10px">Specialized Care Program</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="chronic_condition">Chronic Condition:</label>-->
+<!--                    <input type="text" name="chronic_condition" class="form-control"  placeholder="Chronic Conditon" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                     <label for="enrolledin_PCM_CCM">Enrolled in CCM_PCM:</label>-->
+<!--                        <select name="enrolledin_PCM_CCM" class="form-control">-->
+<!--                            <option value="PCM">Enrolled in PCM</option>-->
+<!--                            <option value="CCM">Enrolled in CCM</option>-->
+<!--                            <option value="not">Not Interested</option>-->
+<!--                            <option value="left">Left the Program</option>-->
+<!--                            <option value="not-eligible">Not Eligible</option>-->
+
+<!--                        </select>-->
+<!--                </div>-->
+<!--                 <div class="col-md-3 mb-3">-->
+<!--                     <label for="enrolledin_BHI">Enrolled in BHI:</label>-->
+<!--                        <select name="enrolledin_BHI" class="form-control">-->
+<!--                            <option value="BHI">Enrolled in BHI</option>-->
+<!--                            <option value="not">Not Interested</option>-->
+<!--                            <option value="left">Left the Program</option>-->
+<!--                            <option value="not-eligible">Not Eligible</option>-->
+
+<!--                        </select>-->
+<!--                </div>-->
+<!--                  <div class="col-md-3 mb-3">-->
+<!--                     <label for="enrolledin_RPM">Enrolled in RPM</label>-->
+<!--                        <select name="enrolledin_RPM" class="form-control">-->
+<!--                            <option value="bp">BP Set</option>-->
+<!--                            <option value="sugar">Sugar</option>-->
+<!--                            <option value="weight">Iscale</option>-->
+<!--                            <option value="not">Not Interested</option>-->
+<!--                            <option value="left">Left the Program</option>-->
+<!--                            <option value="not-eligible">Not Eligible</option>-->
+<!--                        </select>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <h2 style="padding-bottom:10px">Other</h2>-->
+<!--            <div class="form-row" style="padding-bottom:20px" >-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="last_hospital_vist">Last Hospital Visit:</label>-->
+<!--                    <input type="date" name="last_hospital_vist" class="form-control"  placeholder="Last Hospital Visit">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="annual_wellness_vist">Annual Wellness Visit:</label>-->
+<!--                    <input type="date"  name="annual_wellness_vist" class="form-control" placeholder="Annual Wellness Visit" >-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                     <label for="transitional_care_vist">Transitional Care Visit:</label>-->
+<!--                        <select name="transitional_care_vist" class="form-control">-->
+<!--                            <option value="pending">Pending</option>-->
+<!--                            <option value="scheduled">Scheduled</option>-->
+<!--                        </select>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="acp">ACP Date:</label>-->
+<!--                    <input type="date" name="acp" class="form-control"  placeholder="ACP Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-3 mb-3">-->
+<!--                    <label for="med_reconcile_date">Med Reconciliation Date:</label>-->
+<!--                    <input type="date" name="med_reconcile_date" class="form-control"  placeholder="Med Reconciliation Date">-->
+<!--                </div>-->
+<!--                <div class="col-md-7 mb-3">-->
+<!--                    <label for="comments">Comments:</label>-->
+<!--                    <textarea name="comments" class="form-control" placeholder="Comments"></textarea>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+
+
+<!--            <a class="btn btn-primary" href="{% url 'home' %}">Cancel</a>-->
+<!--            <button class="btn btn-primary" type="submit">Submit form</button>-->
+<!--        </form>-->
+
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Add Bootstrap JS &ndash;&gt;-->
+<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,235 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+    .btn-primary:hover {
+    background-color: #FFA500;
+}
+</style>
+
+    <div class="container mt-5">
+        <h1 style="text-align:center;padding-bottom:30px"> New Patient Form</h1>
+        <form class="form" method="POST" novalidate>
+          {% csrf_token %}
+          {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for field_name, error_list in form.errors.items %}
+                {% for error in error_list %}
+                    {{ error }}
+                {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <h2 style="padding-bottom:10px">Front Desk</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-2 mb-3">
+                    {{form.assistant|as_crispy_field}}
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    {{form.status|as_crispy_field}}
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    {{form.referred_by|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.registration_date|as_crispy_field}}
+
+                </div>
+            </div>
+
+            <h2 style="padding-bottom:10px">Patient Personal Information</h2>
+            <div class="form-row" style="padding-bottom:20px">
+                <div class="col-md-3 mb-3">
+                    {{form.name|as_crispy_field}}
+
+                </div>
+                <div class="col-md-2 mb-3">
+                    {{form.date_of_birth|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.provider|as_crispy_field}}
+
+                </div>
+                <div class="col-md-2 mb-3">
+                    {{form.gender|as_crispy_field}}
+
+                </div>
+                <div class="col-md-2 mb-3">
+                    {{form.insurance|as_crispy_field}}
+
+                </div>
+
+               <div class="col-md-2 mb-3">
+                   {{form.insurance_type|as_crispy_field}}
+
+               </div>
+
+
+
+            </div>
+             <h2 style="padding-bottom:10px">Appointment Status</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-3 mb-3">
+                    {{form.patient_appointment|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.last_appointment|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.follow_up|as_crispy_field}}
+
+                </div>
+            </div>
+
+            <h2 style="padding-bottom:10px">Vital Signs</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-3 mb-3">
+                    {{form.last_anthropometric_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.last_bmi|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.last_bp_reading|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.reading_date|as_crispy_field}}
+
+                </div>
+            </div>
+
+            <h2 style="padding-bottom:10px">Labs and Radiology</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-3 mb-3">
+                    {{form.bw_done|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.hb1ac_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.hb1ac|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.fobt_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.colonoscopy_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.cologuard_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.pap_smear_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.mammogram_date|as_crispy_field}}
+
+                </div>
+
+            </div>
+
+            <h2 style="padding-bottom:10px">Controlled Medication</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-3 mb-3">
+                    {{form.suboxone|as_crispy_field}}
+
+                </div>
+                 <div class="col-md-3 mb-3">
+                     {{form.medical_marijuana|as_crispy_field}}
+
+                </div>
+                  <div class="col-md-3 mb-3">
+                      {{form.other_controlled_med|as_crispy_field}}
+
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    {{form.last_uds_date|as_crispy_field}}
+
+                </div>
+            </div>
+
+            <h2 style="padding-bottom:10px">Specialized Care Program</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-3 mb-3">
+                    {{form.chronic_condition|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.enrolledin_PCM_CCM|as_crispy_field}}
+
+                </div>
+                 <div class="col-md-3 mb-3">
+                     {{form.enrolledin_BHI|as_crispy_field}}
+
+                </div>
+                  <div class="col-md-3 mb-3">
+                      {{form.enrolledin_RPM|as_crispy_field}}
+
+                </div>
+
+            </div>
+
+            <h2 style="padding-bottom:10px">Other</h2>
+            <div class="form-row" style="padding-bottom:20px" >
+                <div class="col-md-3 mb-3">
+                    {{form.last_hospital_vist|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.annual_wellness_vist|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.transitional_care_vist|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.acp|as_crispy_field}}
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{form.med_reconcile_date|as_crispy_field}}
+
+                </div>
+                <div class="col-md-7 mb-3">
+                    {{form.comments|as_crispy_field}}
+
+                </div>
+
+            </div>
+
+
+            <button class="btn btn-primary" type="submit">Submit form</button>
+             <a class="btn btn-primary" href="{% url 'home' %}">Cancel</a>
+        </form>
+
+    </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="128x128" href="https://img.icons8.com/external-others-inmotus-design/67/external-T-alphabet-others-inmotus-design-13.png"/>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .login-box {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 5px;
+        }
+
+        .login-box .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-box .login-logo img {
+            width: 100px;
+        }
+
+        .login-box .login-form {
+            margin-bottom: 30px;
+        }
+
+        .login-box .form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-box .form-group label {
+            font-weight: bold;
+        }
+
+        .login-box .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box .form-group button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4caf50;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .login-box .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .login-box .bottom-text {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+{% if page == 'login' %}
+    <div class="login-box">
+        <form class="login-form", method="POST">
+            {% csrf_token %}
+             <h3>Welcome to Titan.</h3>
+            <div class="form-group">
+                <p> Please login to continue. </p>
+                <label for="username">Username:</label>
+                <input type="text" name="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Login">Sign In</button>
+            </div>
+            {% if messages %}
+    <div class="alert alert-danger" role="alert">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+            
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

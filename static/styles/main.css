@@ -1,0 +1,141 @@
+.nav {
+    background-color: #1B1B1E;
+    text-align: center;
+    padding: 5px;
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center vertically within the parent container */
+    justify-content: center; /* Center horizontally within the parent container */
+    height: 100%; /* Make the navbar take the full height of the viewport */
+}
+
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #FFA500;
+}
+
+
+
+/* Center align the columns horizontally in the middle */
+
+/* Style the "View More" button */
+
+.table {
+            background-color: #00000;
+}
+.table thead {
+            background-color: #1B1B1E;
+            color: #fff;
+}
+.table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+}
+
+
+.table-container {
+            margin: 50px auto;
+            max-width: 1500px;
+}
+
+
+footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn btn-primary:hover {
+    background-color: #FFA500;
+}
+
+
+
+/* Style the sidebar */
+.sidebar {
+    background-color: #58A4B0; /* Set a background color */
+    color: #00000; /* Set text color to white or any suitable color */
+    padding: 20px;
+    width: 230px; /* Adjust the width as needed */
+    position: fixed;
+    height: 100%;
+    overflow-y: auto; /* Add vertical scrolling if content overflows */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Add a shadow to the sidebar */
+    left: 0; /* Position the sidebar on the extreme left */
+}
+.sidebar h3 {
+    font-size: 1.5rem; /* Adjust the font size */
+    margin-bottom: 20px;
+}
+
+/* Style the individual activity items */
+.activity-item {
+    padding: 10px;
+    border-bottom: 1px solid #555; /* Add a border between items */
+    transition: background-color 0.3s; /* Add a hover effect */
+}
+
+
+
+/* Optional: Style links or buttons inside the sidebar */
+.activity-item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Optionally, style the active link differently */
+.activity-item.active {
+    background-color: #555;
+}
+
+/* Center align the columns horizontally in the middle */
+
+/* Center the card both horizontally and vertically on the page */
+
+
+/* Style the card bodies */
+/* Style the card bodies */
+
+
+
+/* Center align the columns horizontally in the middle */
+/* Center the row horizontally on the page */
+.card{
+    margin-top: 100px;
+    margin-center: 0 auto;
+    margin-left: 50px;
+}
+
+
+
+
+
+
+.card-body {
+    background-color: #f7f7f7; /* Set the background color for the card body */
+    padding: 15px; /* Add padding for spacing inside the card */
+    text-align: left; /* Align text to the left within the card body */
+    border: 1px solid #ddd; /* Add a border to the card body */
+    border-radius: 5px; /* Round the corners of the card body */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow to the card body */
+    height: 100%; /* Set a fixed height to make them square */
+}
+
+/* Style the "View More" button */
+
+
+
+
+.card-link:hover {
+    color: #FFA500; /* Change text color to orange on hover */
+    background-color: transparent; /* Remove the solid background on hover */
+}
+
+
+/* Custom CSS for the dialog box */
+
+
